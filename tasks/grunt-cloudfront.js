@@ -22,18 +22,10 @@ module.exports = function(grunt) {
         version = options.version,
         data = _.omit(this.data, 'options');
 
-    options.credentials = options.credentials || {};
-
     if (options.awsProfile){
       creds = new AWS.SharedIniFileCredentials({profile: options.awsProfile});
-    }else {
-      creds = {
-        accessKeyId: options.credentials.accessKeyId,
-        secretAccessKey: options.credentials.secretAccessKey
-      };
+      AWS.config.credentials = creds;
     }
-
-    AWS.config.credentials = creds;
 
     AWS.config.update({
       region: options.region
